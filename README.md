@@ -7,4 +7,5 @@ Most boilerplate projects out there fall into two extremes: they are either too 
 Built entirely using Quarkus Panache (Active Record pattern), this project keeps the code down to just a few core files so you can focus 100% on database efficiency, clean mappings, and seeing the direct contrast between Bad Practices and Best Practices.
 
 #### [ℹ️] For a detailed architecture of this web application, please see our [cheatsheet](docs/cheatsheet.md).
+#### [ℹ️] To see the use-case scenario used for this demonstration, please see our [introduction to use-case](docs/usecase.md).
 #### [ℹ️] To run this project, please see our [guide](docs/README-quarkus.md).
