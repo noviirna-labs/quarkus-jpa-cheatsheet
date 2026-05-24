@@ -1,7 +1,7 @@
 ## 📖 Introduction: Understanding the Use-Case Schema
 To truly grasp JPA best practices, we must look at how object models translate into clean database structures. In this cheatsheet, we use a standard academic domain consisting of Students, Profiles, and Courses to demonstrate how a poorly designed schema can be refactored into a high-performance relational database.
 
-In the initial model, our domain attempts to capture a standard academic workflow where a central `students` entity sits between their personal records and their academic activities. Logically, each student is assigned a single, dedicated record in the `profiles` table to store extension data like academic levels. Simultaneously, these students interact with the `courses` catalog, creating a dynamic environment where a single student can attend multiple classes, and a single course can be filled by multiple students.
+In the initial model, our domain attempts to capture a standard academic workflow where a central `students` entity sits between its personal records and academic activities. Logically, each student is assigned a single, dedicated record in the `profiles` table to store extension data like academic levels. Simultaneously, these students interact with the `courses` catalog, creating a dynamic environment where a single student can attend multiple classes, and a single course can be filled by multiple students.
 
 While this accurately reflects the conceptual business logic of a school, translating this three-way web of interactions directly into physical database columns without proper structure creates severe design conflicts, as the tables try to reference each other simultaneously without a clear owner or a proper junction bridge.
 
@@ -9,7 +9,7 @@ While this accurately reflects the conceptual business logic of a school, transl
 
 In the initial design, the schema suffers from classic relational and JPA anti-patterns:
 * **Redundant Indexes in 1:1 Relation:** The `profiles` table manages its own auto-increment `id` alongside a separate `student_id [fk]`, forcing the database to maintain two separate indexes for a strict 1:1 relationship.
-* **The Impossible Many-to-Many Direct Link:** The `students` and `courses` tables attempt to link directly to one another by placing foreign keys (`courses_id` and `student_id`) inside the main entity tables. In a real-world relational database, this setup breaks down completely, as a single table column cannot natively store multiple records without breaking normalization rules.
+* **The Impossible Many-to-Many Direct Link:** The `students` and `courses` tables attempt to link directly to one another by placing foreign keys (`courses_id` and `student_id`) inside the main entity tables. In a real-world relational database, this setup breaks down completely, as a single table column cannot natively store multiple records without breaking first normal form (1NF) rules.
 
 ---
 
