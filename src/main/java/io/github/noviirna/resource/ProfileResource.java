@@ -1,17 +1,38 @@
 package io.github.noviirna.resource;
 
-import io.github.noviirna.dto.ProfileDto;
-import io.github.noviirna.model.Profile;
+import io.github.noviirna.dto.StudentProfileDto;
+import io.github.noviirna.entity.Profile;
 import io.quarkus.hibernate.orm.rest.data.panache.PanacheEntityResource;
+import io.quarkus.rest.data.panache.MethodProperties;
 import io.quarkus.rest.data.panache.ResourceProperties;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 
 
 @ResourceProperties
 public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
+
+    @Override
+    @MethodProperties(exposed = false)
+    @Operation(hidden = true)
+    Profile add(Profile entity);
+
+    @Override
+    @MethodProperties(exposed = false)
+    @Operation(hidden = true)
+    boolean delete(Long id);
+
+    @Override
+    @MethodProperties(exposed = false)
+    @Operation(hidden = true)
+    long count();
+
+    @MethodProperties(exposed = false)
+    @Operation(hidden = true)
+    Profile update(Long id, Profile entity);
 
     /**
      * This method demonstrate how lazy load works and how it can lead to n+1 query problem.<br><br>
@@ -32,15 +53,13 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
      * @return
      */
     @GET
-    @Path("/profile/{id}/complete")
+    @Path("/{id}/complete")
     @Produces("application/json")
-    default ProfileDto getCompleteProfile(@PathParam("id") Long id) {
+    default StudentProfileDto getCompleteProfile(@PathParam("id") Long id) {
         Profile dao = Profile.findById(id);
-
-        return new ProfileDto(dao.id,
+        return new StudentProfileDto(
                 dao.academicLevel,
-                dao.student,
-                dao.student.id);
+                dao.student);
     }
 
 
@@ -53,14 +72,12 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
      * @return
      */
     @GET
-    @Path("/profile/{id}/complete-joinfetch")
+    @Path("/{id}/complete-joinfetch")
     @Produces("application/json")
-    default ProfileDto getCompleteProfileJoinFetch(@PathParam("id") Long id) {
+    default StudentProfileDto getCompleteProfileJoinFetch(@PathParam("id") Long id) {
         Profile dao = Profile.findByIdWithStudent(id);
-
-        return new ProfileDto(dao.id,
+        return new StudentProfileDto(
                 dao.academicLevel,
-                dao.student,
-                dao.student.id);
+                dao.student);
     }
 }
