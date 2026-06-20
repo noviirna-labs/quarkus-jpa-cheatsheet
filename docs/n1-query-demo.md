@@ -60,7 +60,7 @@ you one of them is doing extra work behind the scenes.
 
 ### What's Actually Happening Underneath
 
-|                                                   | Unoptimized (`/demo/n1+query`)                                                                                                                                                                                                                        | Optimized (`/demo/`)                                                                                            |
+|                                                   | Unoptimized (`GET /profile/full/{id}/demo/n+1problem`)                                                                                                                                                                                                | Optimized (`GET /profile/full/{id}`)                                                                            |
 |---------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
 | How `student` is fetched                          | `Profile.findById(id)` loads `Profile` only. `student` stays an uninitialized lazy proxy.                                                                                                                                                             | `findByIdWithStudent(id)` uses `LEFT JOIN FETCH` `Profile` and `Student` are loaded together in one round trip. |
 | What triggers the extra query                     | The `ProfileDto` constructor reads `dao.student`, which forces Hibernate to initialize the proxy *right there* while the Hibernate session is still open (request-scoped), so it succeeds silently instead of throwing `LazyInitializationException`. | Nothing to trigger because `student` is already a fully initialized object by the time the DTO is built.        |
@@ -94,10 +94,10 @@ database starts throttling under load or someone's actually watching the SQL log
 #### The Unoptimized API test result
 
 Call the API using swagger
-![](docs/attachment/example-demo-n+1-problem_swagger-hit-to-api.png)
+![](attachment/example-demo-n+1-problem_swagger-hit-to-api.png)
 
 The log shown two SQL query from hibernate to database, 2 query call
-![](docs/attachment/example-demo-n+1-problem_log.png)
+![](attachment/example-demo-n+1-problem_log.png)
 
 ```
 [Hibernate] 
@@ -128,10 +128,10 @@ ${timestamp} TRACE [org.hibernate.orm.jdbc.bind] (executor-thread-1) binding par
 #### The Optimized API test result
 
 Call the API using swagger
-![](docs/attachment/example-demo-avoid-n+1_swagger-hit-to-api.png)
+![](attachment/example-demo-avoid-n+1_swagger-hit-to-api.png)
 
 The log shown two SQL query from hibernate to database, 1 query call
-![](docs/attachment/example-demo-avoid-n+1_log.png)
+![](attachment/example-demo-avoid-n+1_log.png)
 
 ```
 [Hibernate] 
