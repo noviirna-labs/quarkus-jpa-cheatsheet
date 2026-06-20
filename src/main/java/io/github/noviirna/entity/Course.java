@@ -25,5 +25,4 @@ public class Course extends BaseEntity {
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     @Schema(examples = "23:59:59")
     public LocalTime schedule;
-
 }

@@ -1,3 +1,5 @@
+[← back to README](../README.md)
+
 ## 📖 Introduction: Understanding the Use-Case Schema
 To truly grasp JPA best practices, we must look at how object models translate into clean database structures. In this cheatsheet, we use a standard academic domain consisting of Students, Profiles, and Courses to demonstrate how a poorly designed schema can be refactored into a high-performance relational database.
 

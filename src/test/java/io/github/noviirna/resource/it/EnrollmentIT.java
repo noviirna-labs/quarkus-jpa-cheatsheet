@@ -6,6 +6,8 @@ import io.github.noviirna.resource.factory.EnrollmentFactory;
 import io.github.noviirna.resource.factory.RestPanacheTestFactory;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 class EnrollmentIT extends RestPanacheTest<Enrollment> {
@@ -18,5 +20,28 @@ class EnrollmentIT extends RestPanacheTest<Enrollment> {
         return enrollmentFactory;
     }
 
-//    !TODO! CUSTOM POST IT
+
+    @Override
+    @Test
+    protected void testPost_whileApiIsDisabled_405() {
+        Assumptions.assumeTrue(
+                false,
+                "Enroll support Post, skip this test");
+    }
+
+    @Override
+    @Test
+    protected void testUpdate_success_204() {
+        Assumptions.assumeTrue(
+                false,
+                "Enroll doesn't support update, skip this test");
+    }
+
+    @Override
+    @Test
+    protected void testUpdate_whileNoRecords_500() {
+        Assumptions.assumeTrue(
+                false,
+                "Enroll doesn't support update, skip this test");
+    }
 }
