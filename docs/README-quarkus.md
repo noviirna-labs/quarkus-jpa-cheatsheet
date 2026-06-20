@@ -1,4 +1,4 @@
-[← back to README](../README.md)
+← [Back to README](../README.md)
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -52,3 +52,5 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 You can then execute your native executable with: `./target/quarkus-jpa-practices-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+
+← [Back to README](../README.md)
