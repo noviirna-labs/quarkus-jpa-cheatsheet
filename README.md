@@ -62,7 +62,7 @@ Every entity, relation, and javadoc in this repo is built on top of one concrete
 `Profile` and can enroll in many `Courses`. It's small enough to hold in your head, but it touches all three relation
 types you'll actually run into, 1:1, 1:M, and M:M.
 
-What makes it worth reading isn't the domain itself, it's the **before/after**. The naive version of this schema looks
+What makes it worth reading isn't the domain itself, it's the **before/after**. The unoptimized version of this schema looks
 reasonable on a whiteboard, but breaks down the moment you try to map it with JPA, redundant indexes, a many-to-many
 that can't physically exist as drawn, no clear owner for the relation. The normalized version fixes each of those with a
 specific JPA technique (`@MapsId` for shared primary keys, a junction entity to deconstruct M:M into two 1:M's).
