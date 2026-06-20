@@ -1,8 +1,7 @@
-# quarkus-panache-starter
+# quarkus-panache-swagger-blueprint
 
 A minimalist Quarkus template covering two things at once: clean, optimized Jakarta JPA/Hibernate entity relations (1:1,
-1:M, M:M), and a reusable pattern for Quarkus REST Data Panache's auto-generated CRUD that's actually usable, not just
-theory.
+1:M, M:M), and a reusable pattern for Quarkus REST Data Panache's auto-generated CRUD that's actually usable, ready to extend, and not just a disposable demo.
 
 ## 💡 Why Does This Repository Exist?
 
@@ -22,8 +21,8 @@ While Quarkus REST Data Panache Extension provides automatically generated CRUD 
 instant zero-code HTTP endpoints. While it give you most CRUD API's automatically, most of the time not all of the API
 works when tested, so you ends up customizing more of it or rewrite the code entirely.
 
-Moreover, one of the most common issues when pairing JPA relationships with `PanacheEntityResource` is that *
-*lazy-loaded relations don't stay lazy**. Because the entity is serialized straight to JSON outside of your control, a
+Moreover, one of the most common issues when pairing JPA relationships with `PanacheEntityResource` is that
+**lazy-loaded relations don't stay lazy**. Because the entity is serialized straight to JSON outside of your control, a
 relation marked `FetchType.LAZY` can still get silently triggered (causing N+1 queries) or blow up with a
 `LazyInitializationException`, depending on whether the Hibernate session is still open at serialization time.
 
@@ -47,9 +46,9 @@ This repo covers two layers that are easy to get wrong independently, and worse 
 
 1. **The data layer, JPA relations done right.** How `1:1`, `1:M`, and `M:M` relations should actually be mapped in JPA,
    using a concrete before/after schema as proof, not just theory. → details in the next section.
-2. **The API layer, making auto-generated CRUD reusable.** How to use Quarkus REST Data Panache's
-   `PanacheEntityResource` without it turning into either "doesn't quite work" or "ended up rewriting it anyway." → see
-   the step-by-step below.
+2. **The API layer, making auto-generated CRUD reusable.** How to recognize where Quarkus REST Data Panache's
+   `PanacheEntityResource` breaks down for relations like shared primary keys, and how to fix just those specific
+   cases instead of abandoning the auto-generated CRUD entirely. → see the step-by-step below.
 
 The two layers are connected on purpose: badly-mapped JPA relations are exactly what makes auto-generated CRUD endpoints
 misbehave (silent N+1s, broken serialization, lazy exceptions). Get the data layer right first, and the CRUD layer on
@@ -135,17 +134,17 @@ top of it.
 ```
 src/main/java/<your.package>/
 ├── dto/
-│   └── YourDto.java          # Custom Dto class
+│   └── YourDto.java              # Custom Dto class
 ├── entity/
-│   └── YourEntity.java          # Panache entity (table mapping + relations)
+│   └── YourEntity.java           # Panache entity (table mapping + relations)
 ├── resource/
-│   └── YourEntityResource.java  # Custom Resource interface extending PanacheEntityResource
-├── repository/
-    └── (optional) custom queries if Active Record alone isn't enough, but in this starter template, the focus is on Active record pattern, so it isn't exist in this repository
-
+│   └── YourEntityResource.java   # Custom Resource interface extending PanacheEntityResource
+└── repository/
+    └── (not used in this template, the focus is on the Active Record pattern;
+         add this back if you need custom queries beyond what Active Record offers)
 ```
 
-> The exact package names are up to you, what matters is keeping **entity**, **resource**, and in
+> The exact package names are up to you, what matters is keeping **entity**, **resource**, and **dto** in
 > separate, predictable locations, so that adding a new entity always follows the same pattern.
 
 ---
@@ -198,17 +197,19 @@ public interface ProductResource extends PanacheEntityResource<Product, Long> {
 ### Step 4, Adjust what shouldn't be auto-exposed
 
 This is the step most tutorials skip, and the one that actually determines whether your generated CRUD survives contact
-with real usage. Check the reference in the javadocs for examples of:
+with real usage. Start with `ProfileResource` and `Profile`, they have the most thoroughly javadoc'd examples in this
+repo, covering:
 
-- Excluding a method (e.g. disabling `DELETE` on a soft-delete entity).
+- Excluding a method (e.g. disabling `DELETE` on a shared-primary-key entity).
 - Adding `@Valid` / Bean Validation annotations on the entity fields.
 - Adding OpenAPI annotations (`@Schema`, `@Operation`) so Swagger reflects the real contract, not just the generated
   default.
 
-This template already hide some of the API that normally should not be exposed in a database wrapper microservice or the API that was generated but can't be used due to limitation from the Rest Data Panache extension mentioned above in
-previous sections.
+This template already hides some of the API that normally shouldn't be exposed in a database wrapper microservice, or
+that was generated but can't be used correctly due to the `PanacheEntityResource` limitations covered in the sections
+above.
 
-### Step 6, Run and verify in Swagger
+### Step 5, Run and verify in Swagger
 
 ```bash
 ./mvnw quarkus:dev
