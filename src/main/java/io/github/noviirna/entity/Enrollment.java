@@ -2,9 +2,12 @@ package io.github.noviirna.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serial;
+import java.util.Set;
 
 
 /**
@@ -33,8 +36,11 @@ public class Enrollment extends BaseEntity {
      * {@link #student} relation, so it can be exposed in the response body
      * as a plain {@code Long} instead of a nested {@code Student} object.
      */
+    @NotNull
+    @Positive
     @Schema(examples = "123", description = "id of student")
     public Long getStudentId() {
+        if (this.student == null) return null;
         return this.student.id;
     }
 
@@ -43,6 +49,9 @@ public class Enrollment extends BaseEntity {
      * lazy-reference {@code Student} stub (only {@code id} is set) so JPA can
      * resolve the {@code @ManyToOne} relation without needing the full
      * {@code Student} object in the payload.
+     * <p>
+     * Same approach as {@link #setCourseId}. No manual validation here, see
+     * that javadoc for why.
      */
     public void setStudentId(Long id) {
         if (this.student == null) this.student = new Student();
@@ -54,8 +63,11 @@ public class Enrollment extends BaseEntity {
      * {@link #course} relation, so it can be exposed in the response body
      * as a plain {@code Long} instead of a nested {@code Course} object.
      */
+    @NotNull
+    @Positive
     @Schema(examples = "123", description = "id of course")
     public Long getCourseId() {
+        if (this.course == null) return null;
         return this.course.id;
     }
 
@@ -64,6 +76,16 @@ public class Enrollment extends BaseEntity {
      * lazy-reference {@code Course} stub (only {@code id} is set) so JPA can
      * resolve the {@code @ManyToOne} relation without needing the full
      * {@code Course} object in the payload.
+     * <p>
+     * No manual validation here, {@code id} is still checked by
+     * {@code @NotNull}/{@code @Positive} on {@link #getCourseId()}, enforced
+     * automatically by Hibernate's validate-on-save when this entity is persisted.
+     *
+     * An earlier attempt to also validate inside this setter (for cases where
+     * custom code calls it directly, outside the generated REST flow) ended up
+     * interfering with that working validation instead of adding a second layer.
+     *
+     * Validation inside this method emoved in favor of relying on the one mechanism that's proven to work.
      */
     public void setCourseId(Long id) {
         if (this.course == null) this.course = new Course();

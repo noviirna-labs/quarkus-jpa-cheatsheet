@@ -7,6 +7,7 @@ import io.quarkus.hibernate.orm.rest.data.panache.PanacheEntityResource;
 import io.quarkus.rest.data.panache.MethodProperties;
 import io.quarkus.rest.data.panache.ResourceProperties;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -43,15 +44,9 @@ public interface EnrollmentResource extends PanacheEntityResource<Enrollment, Lo
     @Path("")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    default Response addFixed(@RequestBody Enrollment e) {
-        Student s = null == e.student ? new Student() : e.student;
-        s.id = e.getStudentId();
-
-        Course c = null == e.course ? new Course() : e.course;
-        c.id = e.getCourseId();
-
-        e.student = Student.getEntityManager().getReference(Student.class, s.id);
-        e.course = Course.getEntityManager().getReference(Course.class, c.id);
+    default Response addFixed(@RequestBody @Valid Enrollment e) {
+        e.student = Student.getEntityManager().getReference(Student.class, e.getStudentId());
+        e.course = Course.getEntityManager().getReference(Course.class, e.getCourseId());
 
         e.persist();
         return Response.created(UriBuilder.fromMethod(EnrollmentResource.class, "addFixed").build())
@@ -61,9 +56,7 @@ public interface EnrollmentResource extends PanacheEntityResource<Enrollment, Lo
     @PUT
     @Path("/{id}")
     @Transactional
-    default Response updateFixed(@PathParam("id") Long id, Enrollment e) {
-        if (id == null || e == null || e.student == null || e.student.id == null || e.course == null || e.course.id == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
+    default Response updateFixed(@PathParam("id") Long id, @Valid Enrollment e) {
         e.id = id;
         e.student = Enrollment.getEntityManager().getReference(Student.class, e.student.id);
         e.course = Enrollment.getEntityManager().getReference(Course.class, e.course.id);
