@@ -7,12 +7,14 @@ import io.quarkus.hibernate.orm.rest.data.panache.PanacheEntityResource;
 import io.quarkus.rest.data.panache.MethodProperties;
 import io.quarkus.rest.data.panache.ResourceProperties;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriBuilder;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+
+import java.net.URI;
 
 
 @ResourceProperties
@@ -86,12 +88,12 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
     @POST
     @Path("/{id : \\d+}")
     @Transactional
-    default Response addFixed(@PathParam("id") Long id, Profile profile) {
+    default Response addFixed(@PathParam("id") Long id, @Valid Profile profile) {
         if (id == null || profile == null)
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).build());
         profile.student = Profile.getEntityManager().getReference(Student.class, id);
         profile.persist();
-        return Response.created(UriBuilder.fromMethod(ProfileResource.class, "addFixed").build())
+        return Response.created(URI.create("/profile/" + profile.id))
                 .entity(profile).build();
     }
 
@@ -110,7 +112,7 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
     @PUT
     @Path("/{id : \\d+}")
     @Transactional
-    default Response updateFixed(@PathParam("id") Long id, Profile profile) {
+    default Response updateFixed(@PathParam("id") Long id, @Valid Profile profile) {
         if (id == null || profile == null)
             throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND).build());
         profile.id = id;
@@ -198,15 +200,15 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
     @Path("/full")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    default Response addAggregate(@RequestBody ProfileStudentDto request) {
+    default Response addAggregate(@RequestBody @Valid ProfileStudentDto request) {
         Student s = request.student();
         s.persist();
 
         Profile p = request.profile();
         p.student = s;
         p.persist();
-        ProfileStudentDto dto =  new ProfileStudentDto(p, s);
-        return Response.created(UriBuilder.fromMethod(ProfileResource.class, "addAggregate").build())
+        ProfileStudentDto dto = new ProfileStudentDto(p, s);
+        return Response.created(URI.create("/profile/full"))
                 .entity(dto).build();
     }
 

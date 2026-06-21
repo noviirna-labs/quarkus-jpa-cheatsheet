@@ -3,6 +3,9 @@ package io.github.noviirna.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 
@@ -36,11 +39,14 @@ public class Profile extends BaseEntity {
      * when the {@code Profile} is created alongside its {@code Student}, never
      * assigned directly by the client.
      */
+    @Positive
     @Id
     @Column(name = "student_id", nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long id;
 
+    @NotBlank
+    @Size(max = 30, min = 5)
     public String academicLevel;
     //endregion field
 
