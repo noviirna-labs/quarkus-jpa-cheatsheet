@@ -5,6 +5,8 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.Positive;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -21,6 +23,7 @@ public abstract class BaseEntity extends PanacheEntityBase implements Serializab
      * on entities extending {@code BaseEntity}, since the client should never be
      * the one assigning this value.
      */
+    @Positive
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(examples = "123")
     @Id

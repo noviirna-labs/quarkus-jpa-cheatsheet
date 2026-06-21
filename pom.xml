@@ -72,6 +72,10 @@
             <groupId>jakarta.data</groupId>
             <artifactId>jakarta.data-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
 
 
         <!--Rest        -->
@@ -87,6 +91,7 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest</artifactId>
         </dependency>
+
 
         <!-- open api        -->
         <dependency>
