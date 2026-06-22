@@ -6,6 +6,7 @@ import io.quarkus.rest.data.panache.MethodProperties;
 import io.quarkus.rest.data.panache.ResourceProperties;
 
 
+@SuppressWarnings("unused")
 @ResourceProperties
 public interface StudentResource extends PanacheEntityResource<Student, Long> {
 

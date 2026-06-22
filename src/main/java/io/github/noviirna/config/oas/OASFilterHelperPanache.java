@@ -42,13 +42,10 @@ public class OASFilterHelperPanache {
 
         boolean hasPathParam = path.contains("{") && path.contains("}");
 
-        Paths newPaths = null;
         if (hasPathParam)
-            newPaths = processPathWithParam(paths, path);
+            return processPathWithParam(paths, path);
         else
-            newPaths = processPaths(paths, path);
-
-        return newPaths;
+            return processPaths(paths, path);
     }
 
     private Paths processPaths(Paths originPaths, String endpoint) {
@@ -85,7 +82,7 @@ public class OASFilterHelperPanache {
      */
     private Operation adjustPutApiResponse(PathItem pi) {
         Operation origin = pi.getPUT();
-        if (origin == null) return origin;
+        if (origin == null) return null;
 
         origin.getResponses().removeAPIResponse("200");
         origin.getResponses().removeAPIResponse("201");
@@ -107,7 +104,7 @@ public class OASFilterHelperPanache {
     private Operation adjustGetApiResponseSingle(PathItem pi) {
         Operation op = pi.getGET();
 
-        if (op == null) return op;
+        if (op == null) return null;
 
         op.getResponses().addAPIResponse("404", getAPIResponseNotFound());
 
@@ -118,7 +115,7 @@ public class OASFilterHelperPanache {
     private Operation adjustPostApiResponse(PathItem pi) {
         Operation op = pi.getPOST();
 
-        if (op == null) return op;
+        if (op == null) return null;
 
         op.getResponses().removeAPIResponse("200");
 
@@ -136,7 +133,7 @@ public class OASFilterHelperPanache {
     private Operation adjustDeleteApiResponse(PathItem pi) {
         Operation op = pi.getDELETE();
 
-        if (op == null) return op;
+        if (op == null) return null;
 
         op.getResponses().removeAPIResponse("200");
         op.getResponses().removeAPIResponse("201");
@@ -152,34 +149,29 @@ public class OASFilterHelperPanache {
     }
 
     private APIResponse getApiResponseCreated() {
-        APIResponse apiResponse = OASFactory.createAPIResponse()
+        return OASFactory.createAPIResponse()
                 .description("Created");
-        return apiResponse;
     }
 
 
     private APIResponse getAPIResponseUpdateSuccess() {
-        APIResponse updated = OASFactory.createAPIResponse()
+        return OASFactory.createAPIResponse()
                 .description("Successfully update data");
-        return updated;
     }
 
     private APIResponse getAPIResponseNotFound() {
-        APIResponse notfound = OASFactory.createAPIResponse()
+        return OASFactory.createAPIResponse()
                 .description("Not Found");
-        return notfound;
     }
 
     private APIResponse getAPIResponseConflicted() {
-        APIResponse conflicted = OASFactory.createAPIResponse()
+        return OASFactory.createAPIResponse()
                 .description("Conflict");
-        return conflicted;
     }
 
     private APIResponse getAPIResponseInternalServerError() {
-        APIResponse apiResponse = OASFactory.createAPIResponse()
+        return OASFactory.createAPIResponse()
                 .description("Error: Internal Server Error");
-        return apiResponse;
     }
 
 

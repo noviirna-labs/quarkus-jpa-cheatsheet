@@ -62,8 +62,7 @@ public class OASFilter implements org.eclipse.microprofile.openapi.OASFilter {
             for (String panacheEndpoint : REST_PANACHE_ENDPOINTS) {
                 Paths p = openAPI.getPaths();
                 Paths newP = new OASFilterHelperPanache().applyCustomization(p, panacheEndpoint);
-                p = newP;
-                openAPI.setPaths(p);
+                openAPI.setPaths(newP);
             }
         }
     }

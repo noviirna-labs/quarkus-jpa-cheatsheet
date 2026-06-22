@@ -85,6 +85,7 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
      * client-facing {@code 400}/{@code 404}. No exception mapper is provided in
      * this template, out of scope for what this repo demonstrates.
      */
+    @SuppressWarnings("unused")
     @POST
     @Path("/{id : \\d+}")
     @Transactional
@@ -109,6 +110,7 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
      * a raw {@code 500} from {@code ConstraintViolationException}, not a handled
      * client error, no exception mapper is included in this template.
      */
+    @SuppressWarnings("unused")
     @PUT
     @Path("/{id : \\d+}")
     @Transactional
@@ -131,6 +133,7 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
      * @param id the {@code Profile} id
      * @return the {@code Profile} and its linked {@code Student}, fetched in one query
      */
+    @SuppressWarnings("unused")
     @Transactional
     @GET
     @Path("/full/{id : \\d+}")
@@ -166,6 +169,7 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
      * @param id the {@code Profile} id
      * @return the {@code Profile} and its linked {@code Student}, fetched via a lazily-triggered second query
      */
+    @SuppressWarnings("unused")
     @GET
     @Path("/full/{id : \\d+}/demo/n+1problem")
     @Produces("application/json")
@@ -195,6 +199,7 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
      *                to create together
      * @return the persisted {@code Student} and {@code Profile}, both now sharing
      */
+    @SuppressWarnings("unused")
     @Transactional
     @POST
     @Path("/full")

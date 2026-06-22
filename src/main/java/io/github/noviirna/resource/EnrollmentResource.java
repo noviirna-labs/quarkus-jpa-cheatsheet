@@ -39,6 +39,7 @@ public interface EnrollmentResource extends PanacheEntityResource<Enrollment, Lo
     // endregion hidden endpoints
 
     //region custom endpoints
+    @SuppressWarnings("unused")
     @Transactional
     @POST
     @Path("")
@@ -53,6 +54,7 @@ public interface EnrollmentResource extends PanacheEntityResource<Enrollment, Lo
                 .entity(e).build();
     }
 
+    @SuppressWarnings("unused")
     @PUT
     @Path("/{id}")
     @Transactional
@@ -95,6 +97,7 @@ public interface EnrollmentResource extends PanacheEntityResource<Enrollment, Lo
      * @param courseId the {@code Course} whose enrollments should all be removed
      * @return the number of {@code Enrollment} rows deleted
      */
+    @SuppressWarnings("unused")
     @DELETE
     @Path("/course/{course_id : \\d+}")
     @Transactional
