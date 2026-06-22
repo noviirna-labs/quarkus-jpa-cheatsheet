@@ -245,7 +245,7 @@ That last checkbox is the whole point of this template: **generated ≠ working*
 
 ## 📚 Further Reading
 
-- [Tips, tricks & the reasoning behind them](docs/cheatsheet.md)
+- [Tips, tricks & the reasoning behind them](docs/cheatsheet.md), every design decision in this repo explained with "why"
 - [The schema behind the examples](docs/usecase.md), full before/after normalization writeup
 - [The N+1 problem, demonstrated](docs/n1-query-demo.md), two real endpoints, side by side, with query counts
 - [How to run this project](docs/README-quarkus.md)
