@@ -72,10 +72,14 @@ Before creating new test files, rename the `custom/` directory to match your bus
 This keeps custom resources cleanly separated from the core Panache entity test suite.
 This structure keeps your custom standard resources cleanly separated from the core PanacheEntity factory system.
 (which is a custom class in this project, not from an external library)
+
 Example:
+
+```
 resource/
 ├── panacheentity/ # Panache auto-generated resources
 ├── product/ # (renamed from custom/) Custom product service tests
 └── billing/ # Another custom domain
+```
 
 ← [Back to README](../README.md)
