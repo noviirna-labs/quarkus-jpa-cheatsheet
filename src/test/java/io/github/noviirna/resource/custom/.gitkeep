@@ -1,6 +1,6 @@
 [ EXTENSION GUIDE ]
 
-RENAME THIS PACKAGE: Before creating your files, please rename this directory (your_additional_resource) to match your actual business feature or domain name (e.g., product, billing, or customer).
+RENAME THIS PACKAGE: Before creating your files, please rename this directory (custom) to match your actual business feature or domain name (e.g., product, billing, or customer).
 
 USAGE: Use the renamed directory to place your new unit tests for classes that do not extend PanacheEntityResource.
 

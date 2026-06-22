@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
-// src/test/java/base/PanacheRestIntegrationTest.java
 @QuarkusTest
 public abstract class RestPanacheTest<T extends BaseEntity> {
 
@@ -24,7 +23,7 @@ public abstract class RestPanacheTest<T extends BaseEntity> {
     }
 
 
-    private static final long VALUE_ID = 1l;
+    private static final long VALUE_ID = 1L;
     private static final String FIELDNAME_ID = "id";
 
     private static final String PATHPARAM_ID = "/{id}";
@@ -44,7 +43,7 @@ public abstract class RestPanacheTest<T extends BaseEntity> {
     }
 
     @Test
-    protected void testFindById_isExists_200() throws JsonProcessingException {
+    protected void testFindById_isExists_200()  {
         BaseEntity p = factory().insertEntity();
         given()
                 .when()
@@ -71,8 +70,8 @@ public abstract class RestPanacheTest<T extends BaseEntity> {
 
 
     @Test
-    protected void testFindAll_returnList_200() throws JsonProcessingException {
-        BaseEntity p = factory().insertEntity();
+    protected void testFindAll_returnList_200() {
+        factory().insertEntity();
         given()
                 .when()
                 .get(factory().getPath())
