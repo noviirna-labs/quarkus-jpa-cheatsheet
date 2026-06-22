@@ -1,4 +1,4 @@
-package io.github.noviirna.resource.factory;
+package io.github.noviirna.resource.panacheentity;
 
 public interface RestPanacheTestFactory<T> {
 

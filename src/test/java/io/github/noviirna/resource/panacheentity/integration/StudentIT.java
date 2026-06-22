@@ -1,9 +1,9 @@
-package io.github.noviirna.resource.it;
+package io.github.noviirna.resource.panacheentity.integration;
 
 import io.github.noviirna.entity.Student;
-import io.github.noviirna.resource.base.RestPanacheTest;
-import io.github.noviirna.resource.factory.RestPanacheTestFactory;
-import io.github.noviirna.resource.factory.StudentFactory;
+import io.github.noviirna.resource.panacheentity.RestPanacheTest;
+import io.github.noviirna.resource.panacheentity.RestPanacheTestFactory;
+import io.github.noviirna.resource.panacheentity.factory.StudentFactory;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;

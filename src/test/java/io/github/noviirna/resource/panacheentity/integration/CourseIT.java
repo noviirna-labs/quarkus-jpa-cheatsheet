@@ -1,11 +1,11 @@
-package io.github.noviirna.resource.it;
+package io.github.noviirna.resource.panacheentity.integration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.noviirna.entity.Course;
-import io.github.noviirna.resource.base.RestPanacheTest;
-import io.github.noviirna.resource.factory.CourseFactory;
-import io.github.noviirna.resource.factory.RestPanacheTestFactory;
+import io.github.noviirna.resource.panacheentity.RestPanacheTest;
+import io.github.noviirna.resource.panacheentity.factory.CourseFactory;
+import io.github.noviirna.resource.panacheentity.RestPanacheTestFactory;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;

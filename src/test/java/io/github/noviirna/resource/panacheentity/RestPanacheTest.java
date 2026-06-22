@@ -1,9 +1,8 @@
-package io.github.noviirna.resource.base;
+package io.github.noviirna.resource.panacheentity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.noviirna.entity.BaseEntity;
-import io.github.noviirna.resource.factory.RestPanacheTestFactory;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;

@@ -1,6 +1,7 @@
-package io.github.noviirna.resource.factory;
+package io.github.noviirna.resource.panacheentity.factory;
 
 import io.github.noviirna.entity.Course;
+import io.github.noviirna.resource.panacheentity.RestPanacheTestFactory;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
