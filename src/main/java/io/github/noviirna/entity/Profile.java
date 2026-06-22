@@ -65,7 +65,7 @@ public class Profile extends BaseEntity {
      * explicitly rather than relying on lazy navigation from this field.
      */
     @MapsId
-    @OneToOne(cascade = {}, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     @JsonIgnore
     public Student student;

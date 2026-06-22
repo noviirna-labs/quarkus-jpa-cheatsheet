@@ -52,6 +52,7 @@ public class Enrollment extends BaseEntity {
      * Same approach as {@link #setCourseId}. No manual validation here, see
      * that javadoc for why.
      */
+    @SuppressWarnings("unused")
     public void setStudentId(Long id) {
         if (this.student == null) this.student = new Student();
         this.student.id = id;
@@ -79,13 +80,14 @@ public class Enrollment extends BaseEntity {
      * No manual validation here, {@code id} is still checked by
      * {@code @NotNull}/{@code @Positive} on {@link #getCourseId()}, enforced
      * automatically by Hibernate's validate-on-save when this entity is persisted.
-     *
+     * <p>
      * An earlier attempt to also validate inside this setter (for cases where
      * custom code calls it directly, outside the generated REST flow) ended up
      * interfering with that working validation instead of adding a second layer.
-     *
+     * <p>
      * Validation inside this method emoved in favor of relying on the one mechanism that's proven to work.
      */
+    @SuppressWarnings("unused")
     public void setCourseId(Long id) {
         if (this.course == null) this.course = new Course();
         this.course.id = id;
@@ -99,7 +101,7 @@ public class Enrollment extends BaseEntity {
      * a flat id via {@link #getStudentId()} / {@link #setStudentId(Long)}.
      */
     @JsonIgnore
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     public Student student;
 
@@ -110,7 +112,7 @@ public class Enrollment extends BaseEntity {
      * a flat id via {@link #getCourseId()} / {@link #setCourseId(Long)}.
      */
     @JsonIgnore
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     public Course course;
     //endregion
