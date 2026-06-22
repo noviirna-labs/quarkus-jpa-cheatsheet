@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Positive;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serial;
-import java.util.Set;
 
 
 /**

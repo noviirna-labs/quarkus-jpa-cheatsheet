@@ -5,7 +5,6 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Positive;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
