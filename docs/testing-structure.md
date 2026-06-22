@@ -2,6 +2,7 @@
 
 ## Testing Structure
 
+```
 src/test/java/<your.package>/
 ├── resource/
 │ ├── panacheentity/
@@ -20,6 +21,7 @@ src/test/java/<your.package>/
 │ │  
 │ └── custom/ # Your custom resources go here (not Panache auto-generated)
 │   └── .gitkeep # Guidance notes for further extension
+```
 
 ## Factory Pattern Setup
 
