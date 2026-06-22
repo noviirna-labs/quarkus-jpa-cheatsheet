@@ -1,5 +1,6 @@
 package io.github.noviirna.resource.panacheentity.factory;
 
+import io.github.noviirna.entity.Enrollment;
 import io.github.noviirna.entity.Profile;
 import io.github.noviirna.entity.Student;
 import io.github.noviirna.resource.panacheentity.RestPanacheTestFactory;
@@ -17,6 +18,7 @@ public class StudentFactory implements RestPanacheTestFactory<Student> {
     @Transactional
     @Override
     public void purgeEntity() {
+        Enrollment.deleteAll();
         Profile.deleteAll();
         Student.deleteAll();
     }
@@ -36,4 +38,11 @@ public class StudentFactory implements RestPanacheTestFactory<Student> {
         return s;
     }
 
+    @Transactional
+    @Override
+    public void delete(Student s) {
+        Enrollment.delete("student.id", s.id);
+        Profile.deleteById(s.id);
+        s.delete();
+    }
 }

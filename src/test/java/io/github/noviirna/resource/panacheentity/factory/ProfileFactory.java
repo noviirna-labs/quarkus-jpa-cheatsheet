@@ -18,7 +18,6 @@ public class ProfileFactory implements RestPanacheTestFactory<Profile> {
     @Override
     public void purgeEntity() {
         Profile.deleteAll();
-        Student.deleteAll();
     }
 
     @Transactional
@@ -34,6 +33,12 @@ public class ProfileFactory implements RestPanacheTestFactory<Profile> {
         p.id = s.id;
         p.persist();
         return p;
+    }
+
+    @Transactional
+    @Override
+    public void delete(Profile p) {
+        p.delete();
     }
 
 }

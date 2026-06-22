@@ -140,6 +140,7 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
     @Produces(MediaType.APPLICATION_JSON)
     default ProfileStudentDto getAggregate(@PathParam("id") long id) {
         Profile p = Profile.findByIdWithStudent(id);
+        if (p == null) throw new WebApplicationException(404);
         return new ProfileStudentDto(p, p.student);
     }
 
@@ -175,6 +176,7 @@ public interface ProfileResource extends PanacheEntityResource<Profile, Long> {
     @Produces("application/json")
     default ProfileStudentDto getAggregateDemoN1Problem(@PathParam("id") long id) {
         Profile p = Profile.findById(id);
+        if (p == null) throw new WebApplicationException(404);
         return new ProfileStudentDto(p, p.student);
     }
 

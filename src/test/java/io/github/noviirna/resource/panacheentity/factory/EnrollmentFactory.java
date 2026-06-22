@@ -52,4 +52,10 @@ public class EnrollmentFactory implements RestPanacheTestFactory<Enrollment> {
         return e;
     }
 
+    @Transactional
+    @Override
+    public void delete(Enrollment e) {
+        e.delete();
+    }
+
 }

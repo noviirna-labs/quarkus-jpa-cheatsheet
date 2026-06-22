@@ -9,7 +9,6 @@ public interface RestPanacheTestFactory<T> {
 
     void purgeEntity();
 
-
-
+    void delete(T entity);
 
 }
